@@ -1,0 +1,31 @@
+1.
+  1. string
+  2. integer
+  3. date
+  4. float
+  5. float
+2. A database is used when a program needs to store, access, update, create, and delete data.  While this can technically be done in other ways, databases are used when the data needs to be changed and accessible between sessions.
+3. SQL is declarative while most other languages are procedural.  This means that we don't need to tell sql how to find something, just what to find.
+4. A database is stored on a server. The database can be accessed and manipulated through instances of a program.  This means that data is updated across all instances of a program at once.
+5.
+  Table - where data is stored, think spreadsheet
+  Row - horizontal line of table that shows different parts of an object (a user)
+  Column - vertical line of table that shows the value of a variable in every object (all users' email)
+  Value - result of a row (a user's email)
+6. varchar, id, date
+7.
+  1. Select the date and amount from payments - would return the date and amount columns on the payments table
+  2. Select the amount from payments where the amount is greater than 500 - would return the amount columns from the payments table if the amount is greater than 500
+  3. Select all from payments where the payee is Mega Foods - would return all columns where the payee is Mega Foods on the payments table
+8.
+  1. SELECT email, signup
+  FROM users
+  WHERE name = 'DeAndre Data';
+
+  2. SELECT userid
+  FROM users
+  WHERE email = 'aleesia.algorithm@uw.edu';
+
+  3. SELECT *
+  FROM users
+  WHERE userid = 4;
