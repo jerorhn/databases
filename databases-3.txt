@@ -1,0 +1,116 @@
+1.
+  1. Add -
+    a. new table
+    CREATE TABLE table-name (
+      column-name-1 datatype,
+      column-name-2 datatype
+    );
+
+    b. multiple rows
+    INSERT INTO table-name (column-name-1, column-name-2, column-name-3)
+    VALUES
+      (new-row-1-column-1-data, column-2-data, column-3-data),
+      (new-row-2-column-1-data, column-2-data, column-3-data);
+
+    c. one row, data in order
+    INSERT INTO table-name VALUES (column-1-data, column-2-data, column-3-data);
+
+  2. Update -
+    a. update data
+    UPDATE table-name SET column-name=new-value, another-column-name=new-value WHERE column-name=current-value AND another-column-name=current-value;
+    b. update table
+    ALTER TABLE table-name ADD COLUMN column-name data-type SET DEFAULT default-value;
+
+  3. Delete -
+    a. delete data
+    DELETE FROM table-name WHERE column-name=value AND column-name=value;
+    b. delete column
+    ALTER TABLE table-name DROP COLUMN column-name;
+    c. delete table
+    DROP TABLE table-name;
+
+3. Datatypes -
+  - varchar
+    - string of random length, name, email, username
+  - timestamp
+    - date-time data is stored, publish date-time of a blog post
+  - int
+    - userid, inventory count of particular item
+  - boolean
+    - true/false, if a user has a paid membership, if a product is in stock
+
+4.
+  a. Wedding guest table
+    first name - varchar
+    last name - varchar
+    rsvp - boolean
+    guests attending - tinyint
+    meals - tinyint
+  b. CREATE TABLE guests (
+    firstname varchar,
+    lastname varchar,
+    rsvp boolean,
+    attending tinyint,
+    meals tinyint
+  );
+  c. ALTER TABLE guests ADD COLUMN thankyou boolean;
+  d. ALTER TABLE guests DROP COLUMN meals;
+  e. ALTER TABLE guests ADD COLUMN table tinyint;
+  e. ALTER TABLE guests DROP COLUMN table;
+
+5. a.
+  CREATE TABLE library (
+    isbn tinyint,
+    title varchar,
+    author varchar,
+    genre varchar,
+    published date,
+    copies tinyint,
+    available tinyint
+  );
+  b. INSERT INTO library (isbn, title, author, genre, published, copies, available)
+  VALUES
+    (9781501163401, 'Sleeping Beauties', 'Stephen King, Owen King', 'thriller', 2017-09-26, 5, 2),
+    (9780553499117, 'Illuminae', 'Amie Kaufman, Jay Kristoff', 'science-fiction', 2015-10-20, 3, 1),
+    (9780316387835, 'The Chemist', 'Stephenie Meyer', 'thriller', 2016-11-08, 1, 1);
+  c. UPDATE library SET available=1 WHERE isbn=9781501163401;
+  d. DELETE FROM library WHERE isbn=9780553499117;
+
+6.
+  a. CREATE TABLE hanger (
+    id int,
+    name varchar,
+    launched date,
+    country varchar,
+    description varchar,
+    orbit varchar,
+    operational boolean,
+    proximity int
+  );
+  b. INSERT INTO hanger (id, name, launched, country, description, orbit, operational, proximity)
+  VALUES
+    (39378, 'MAVEN', 2013-11-18, 'United States of America', 'used to study the atmosphere of Mars', 'Mars', true, 140000000),
+    (5, 'Venera 7', 1970-12-15, 'Soviet Union', 'first spacecraft to land on another planet', 'Venus', true, 25,724,767),
+    (10271, 'Voyager 2', 1977-08-20, 'United States of America', 'study the outer planets', 'Neptune', true, 2,703,959,960);
+  c. DELETE FROM hanger WHERE id=39378;
+  d. UPDATE hanger SET operational=false WHERE id=5;
+
+7.
+  a. CREATE TABLE inbox (
+    id int,
+    subject varchar,
+    sender varchar,
+    recipients varchar,
+    body varchar,
+    timestamp timestamp,
+    read boolean,
+    chainid int
+  );
+  b. INSERT INTO inbox (id, subject, sender, recipients, body, timestamp, read, chainid)
+  VALUES
+    (5, 'subject 1', 'test@bloc.io', 'help@bloc.io', 'sample message body', 2018-01-08 04:05:06, true, 2),
+    (7, 'another subject', 'hello@sample.com', '', 'another message!', 2018-05-08 04:05:06, false, 5),
+    (11, 're: subject 1', 'test@bloc.io', 'help@bloc.io', 'response to subject 1', 2018-07-10 04:05:06, true, 2);
+
+  c. DELETE FROM inbox WHERE sender=hello@sample.com;
+  d. UPDATE inbox SET read=false WHERE id=11;
