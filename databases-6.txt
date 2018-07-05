@@ -1,0 +1,83 @@
+1.
+  a. SUM - return sum of all a column's values | find price to buy all products
+  b. AVG - return avg value of a column's data | find average price of products
+  c. COUNT - return number of values a column has | find number of products a list has
+  d. MIN - return min column value | find cheapest product
+  e. MAX - return max column value | find most expensive product
+
+2.
+  a. SELECT SUM(amount)
+  FROM donations;
+
+  (sum)
+  (993);
+
+  b. SELECT donor, SUM(amount) AS total_amount
+  FROM donations
+  GROUP BY donor;
+
+  (donor,	total_amount)
+  (Samwell,	20), (Daario,	10), (Brienne,	75), (Tyrion,	120), (Petyr,	70), (Melisandre,	45), (Bran,	25), (Tormund,	50), (Ygritte,	30), (Gilly,	7), (Jon,	25), (Arya,	60), (Theon,	20), (Bronn,	20), (Margaery,	120), (Missandei,	90), (Sansa,	33),(Daenerys	173)
+
+  c. SELECT AVG(amount)
+  FROM donations;
+
+  (avg)
+  (36.77777777777778)
+
+  d. SELECT COUNT(amount)
+  FROM donations
+  WHERE amount > 100;
+
+  (count)
+  (2)
+
+  e. SELECT MAX(amount)
+  FROM donations;
+
+  (max)
+  (120)
+
+  f. SELECT MIN(amount)
+  FROM donations;
+
+  (min)
+  (5)
+
+3. You would use the order by clause to determine ascending or descending order.  To determine which column displays first, you change the order they appear after 'SELECT'.
+
+4. A situation where you would use offset is if you were breaking data down by every x number of rows.
+
+5. It is important to use order by in this case to ensure that you are getting the data that you want, for instance looking for the 5 least, or the 5 highest.
+
+6. HAVING runs the condition after aggregation, WHERE runs the condition before aggregation.  It is important to know that this is only true with GROUP BY, all other times HAVING works the same was as WHERE.
+
+7. SELECT id, SUM (amount)
+  FROM payment
+  WHERE amount > 200;
+
+8.
+  a. SELECT *
+  FROM cats
+  ORDER BY intake_date;
+
+  b. SELECT *
+  FROM adoptions
+  ORDER BY date DESC
+  LIMIT 5;
+
+  c. SELECT *
+  FROM cats
+  WHERE gender = FEMALE AND age >= 2;
+
+  d. SELECT donor, SUM(amount) AS total_amount
+  FROM donations
+  GROUP BY donor
+  ORDER BY total_amount DESC
+  LIMIT 5;
+
+  e. SELECT donor, SUM(amount) AS total_amount
+  FROM donations
+  GROUP BY donor
+  ORDER BY total_amount DESC
+  LIMIT 10 OFFSET 5;
