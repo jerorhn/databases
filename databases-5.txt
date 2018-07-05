@@ -1,0 +1,75 @@
+1. SELECT column
+  FROM table
+  WHERE condition;
+
+2. Summer Fun Weather
+
+3.
+  a. SELECT name, gender, age
+  FROM dogs
+  WHERE breed LIKE '%labrador%';
+
+  b. SELECT id
+  FROM dogs
+  WHERE age < 1;
+
+  c. SELECT name, age
+  FROM dogs
+  WHERE gender = female AND weight > 35;
+
+  d. SELECT *
+  FROM dogs
+  WHERE breed NOT LIKE '%shepherd%';
+
+  e. SELECT id, age, weight, breed
+  FROM dogs
+  WHERE weight > 60 OR breed = 'great dane';
+
+4.
+  a. ( "name", "adoption_date")
+    ( 'Mushi',    '2016-03-22'),
+    ( 'Seashell',     NULL),
+    ( 'Azul',     '2016-04-17'),
+    ( 'Victoire', '2016-09-01'),
+    ( 'Nala',         NULL);
+
+  b. ( "name", "age")
+    ( 'Mushi',    1),
+    ( 'Seashell', 7),
+    ( 'Azul',     3),
+    ( 'Victoire', 7),
+    ( 'Nala',     1);
+
+5.
+  a. SELECT *
+  FROM cats;
+
+  b. SELECT name, gender
+  FROM cats
+  WHERE age = 7;
+
+  c. SELECT name
+  FROM cats;
+
+6.
+> greater than | if books_read is greater than goal
+< less than | total notes is less than 25 (if limited for membership)
+>= greater than or equal to | user age is greater than or equal to 13
+<= less than or equal to | date today minus created_on is less than or equal to 7 days
+!= of <> not equal to | payment doesn't equal false
+= equal to | group id is equal to group number
+
+7.
+  a. ("name")
+    ('Seashell'),
+    ('Nala');
+
+  b. ("name")
+    ('Mushi'),
+    ('Seashell'),
+    ('Victoire'),
+    ('Nala');
+
+  c. ("id")
+    ( 3 ),
+    ( 4 );
