@@ -1,0 +1,101 @@
+1. You use a join statement to get the related data returned.
+
+2. A cross join, gives every combination of columns from each table.  It could be used to figure out every possible seating combination for a list of guests and tables.  A inner join is most common and it is used to get only the related data.  It could be used to match the brand of dog food on one table to the price of the dog food on another table.  A left outer join first performs an inner join, then includes a column for every column on the first table.  It could be used to expand the table of dogs(name, breed, weight, age, food-brand) to include the dog food prices.  A right outer join is similar to a left outer join except that every column from the second table is kept instead of the first.  This could be used if we wanted the dog food table to include all of the information of the dog table.  A full outer join includes all columns of both tables as well as the inner join related columns.  This could be used to show all guests not yet assigned a table, and all open seats that don't yet have a guest.
+
+3. A primary key is a unique identifier for a row in a table.  Each only occurs once.  A foreign key is usually a way to reference a certain set of data in a table where the foreign key is the primary key of another related table.  A foreign key links the information to the primary key of another table.
+
+4. Aliasing is giving each table a shorter variable so that it can be referenced quicker than using its full name.
+
+5. SELECT p.name, c.salary, c.vacation_days
+FROM professor AS p
+JOIN compensation AS c
+ON p.id = c.professor_id;
+
+6. You would use a natural join if there were columns that related with the same name in multiple tables.  For instance, if there is a phone number column in two different tables, you could link the tables using a natural join where the phone numbers from each table matched.  If we had a user table and a confirmation table, we could link the users who confirmed this way if each required a phone number.
+
+7. SELECT ss.employee_id, s.id
+FROM scheduled_shifts AS ss
+RIGHT OUTER JOIN shifts AS s
+ON ss.shift_id = s.id;
+
+8.
+  a. SELECT *
+  FROM volunteers
+  JOIN dogs
+  ON volunteers.foster_dog_id = dogs.id;
+
+  b. SELECT cats.name, adopters.first_name, adopters.last_name, cat_adoptions.date
+  FROM cat_adoptions
+  JOIN adopters
+  ON cat_adoptions.adopter_id = adopters.id
+  JOIN cats
+  ON cat_adoptions.cat_id = cats.id;
+
+  c. SELECT adopters.first_name, adopters.last_name, dogs.name
+	FROM adopters
+	CROSS JOIN dogs
+	LEFT JOIN dog_adoptions
+	ON adopters.id = dog_adoptions.adopter_id OR dogs.id = dog_adoptions.dog_id
+	WHERE dog_adoptions.adopter_id IS NULL AND dog_adoptions.dog_id IS NULL;
+
+  d. SELECT cats.name AS cats
+  FROM cats
+  LEFT JOIN cat_adoptions
+  ON cats.id = cat_adoptions.cat_id
+  WHERE cat_adoptions.cat_id IS NULL;
+
+  SELECT dogs.name AS dogs
+  FROM dogs
+  LEFT JOIN dog_adoptions
+  ON dogs.id = dog_adoptions.dog_id
+  WHERE dog_adoptions.dog_id IS NULL;
+
+  e. SELECT volunteers.first_name, volunteers.last_name, volunteers.available_to_foster AS available, dogs.name
+  FROM volunteers
+  FULL OUTER JOIN dogs
+  ON volunteers.foster_dog_id = dogs.id;
+
+  f. SELECT adopters.first_name, adopters.last_name
+	FROM adopters
+	LEFT JOIN dog_adoptions
+	ON adopters.id = dog_adoptions.adopter_id
+  LEFT JOIN dogs
+  ON dogs.id = dog_adoptions.dog_id
+  WHERE dogs.name = 'Rosco';
+
+9.
+  a. SELECT patrons.name, holds.rank
+  FROM holds
+  RIGHT JOIN patrons
+  ON patrons.id = holds.patron_id
+  LEFT JOIN books
+  ON holds.isbn = books.isbn
+  WHERE books.title = 'Advanced Potion-Making'
+  ORDER BY holds.rank;
+
+  b. SELECT books.title, transactions.checked_in_date AS checked_in
+  FROM books
+  LEFT JOIN transactions
+  ON books.isbn = transactions.isbn;
+
+  c. SELECT books.title, AVG(transactions.checked_in_date - transactions.checked_out_date) AS average
+  FROM books
+  LEFT JOIN transactions
+  ON books.isbn = transactions.isbn
+  WHERE transactions.checked_in_date >= CURRENT_DATE - INTERVAL '30 DAYS' AND transactions.checked_in_date IS NOT NULL
+  GROUP BY books.title;
+
+  d. SELECT books.title
+  FROM transactions
+  LEFT JOIN books
+  ON transactions.isbn = books.isbn
+  GROUP BY books.title
+  HAVING MAX(transactions.checked_out_date) < CURRENT_DATE - INTERVAL '5 YEARS';
+
+  e. SELECT patrons.name, books.title
+  FROM patrons
+  LEFT JOIN transactions
+  ON patrons.id = transactions.patron_id
+  FULL OUTER JOIN books
+  ON books.isbn = transactions.isbn
+  WHERE transactions.checked_in_date IS NULL;
