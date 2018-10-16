@@ -1,0 +1,23 @@
+1. SELECT guests.*
+FROM guests
+LEFT JOIN booking
+On guests.id = booking.guest_id
+WHERE booking.guest_id IS NULL;
+
+2. SELECT guests.first_name, guests.last_name, b.check_in, b.check_out, ARRAY_AGG(b.room_id) AS rooms
+FROM booking AS b
+JOIN guests
+ON guests.id = b.guest_id
+GROUP BY guests.first_name, guests.last_name, b.check_in, b.check_out
+HAVING COUNT(*) > 1;
+
+3. SELECT guests.first_name, guests.last_name, b.room_id, ARRAY_AGG(b.check_in) AS check_in
+FROM booking AS b
+JOIN guests
+ON guests.id = b.guest_id
+GROUP BY guests.first_name, guests.last_name, b.room_id
+HAVING COUNT(*) > 1;
+
+4. SELECT room_id, COUNT(DISTINCT(guest_id))
+FROM booking
+GROUP BY room_id;
