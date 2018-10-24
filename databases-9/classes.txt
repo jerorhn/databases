@@ -1,0 +1,64 @@
+What classes/entities do we need to model?
+  We need to store student and class information.  We also need to store students' grades for each class.
+
+What fields/attributes will each entity need?
+  At the very least, each student will need a first and last name in the system.
+
+  As far as classes go, each class must have a name at the very least.  I left it at this since we do not know if there are multiple sections or times or if it is a continuous self-paced online course.
+
+  We would also need to know which students were taking each class and what their grades are.  This is in a different table called roster.
+
+What data types do we need to use?
+  Strings are used for most of the student data with the exception of the phone number which is an integer.  For the class data, strings are also used.
+
+What relationships exist between entities?
+  There is a relationship between each student in the student table and the students in the classes table.  We have many students with each of them being able to take multiple classes.
+
+How should those relationships be represented in tables?
+  The relationship would best be represented using a foreign key connecting the student's id to the student column in the class table.
+
+
+
+Students Table:
+  id - primary key, integer
+  first_name - text
+  last_name - text
+
+Classes Table:
+  id - primary key, integer
+  class_name - text
+
+Roster Table:
+  id - primary key, integer
+  student_id - integer
+  class_id - integer
+  grade - char(1)
+
+
+
+1. SELECT students.first_name, students.last_name
+FROM roster
+JOIN students
+ON roster.student_id=students.id
+WHERE roster.class_id=1;
+
+2. SELECT COUNT(roster.student_id), grade
+FROM roster
+WHERE roster.class_id=2
+GROUP BY grade
+ORDER BY grade asc;
+
+3. SELECT COUNT(roster.student_id), classes.class_name
+FROM roster
+JOIN classes
+ON roster.class_id=classes.id
+GROUP BY classes.class_name
+ORDER BY COUNT desc;
+
+4. SELECT classes.class_name
+FROM roster
+JOIN classes
+ON roster.class_id=classes.id
+GROUP BY classes.class_name
+ORDER BY COUNT(roster.student_id) desc
+LIMIT 1;
