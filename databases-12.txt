@@ -1,0 +1,87 @@
+1. A subquery is a query that is executed within another query.
+
+2. Subqueries can be used within the select clause to get another column of data.  They are usually used in this case to pull an aggregate function in from another table.  However, they could also be used in the select clause instead of a join.  You could call in a data column from another table this way without having to add a join clause to your query.
+
+3. Subqueries are used when we need to get data from a table using data from a different table.
+
+4. A row constructor is the creation of a row of values for comparison in a subquery.
+
+5. The comparison also returns null.
+
+6. A subquery can be used many ways within the where clause.  It can be used with 'exists' to determine if something exists, 'not exists' to determine if something does not exist in a specific case, 'in' to determine if the subquery matches the condition, 'not in' to determine if the subquery doesn't match the condition, 'all' to determine if every row of the subquery matches the condition, and with 'some' or 'any' to determine if at least one row of the subquery matches the condition.
+
+7.
+  a. SELECT first_name, last_name, available_to_foster,
+  (SELECT name AS foster_dog_name FROM dogs WHERE volunteers.foster_dog_id = dogs.id)
+  FROM volunteers;
+
+  b. SELECT (SELECT name AS cat_name FROM cats WHERE cat_adoptions.cat_id = cats.id), (SELECT first_name AS adopter_first_name FROM adopters WHERE cat_adoptions.adopter_id = adopters.id ), (SELECT last_name AS adopter_last_name FROM adopters WHERE cat_adoptions.adopter_id = adopters.id ), date
+  FROM cat_adoptions
+  WHERE date > CURRENT_DATE - INTERVAL '1 MONTH';
+
+  c. SELECT adopters.first_name, adopters.last_name, dogs.name
+	FROM adopters
+	CROSS JOIN dogs
+	WHERE NOT EXISTS
+    	(SELECT adopter_id, dog_id
+      FROM dog_adoptions
+      WHERE adopters.id = dog_adoptions.adopter_id OR dogs.id = dog_adoptions.dog_id);
+
+  d. SELECT *
+  FROM cats
+  WHERE cats.id NOT IN
+  (SELECT cat_id FROM cat_adoptions);
+
+  SELECT *
+  FROM dogs
+  WHERE dogs.id NOT IN
+  (SELECT dog_id FROM dog_adoptions);
+
+  e. SELECT (SELECT first_name FROM adopters WHERE dog_adoptions.adopter_id = adopters.id), (SELECT last_name FROM adopters WHERE dog_adoptions.adopter_id = adopters.id)
+  FROM dog_adoptions
+  WHERE dog_id IN
+  (SELECT id
+  FROM dogs
+  WHERE name = 'Rosco');
+
+8.
+  a. SELECT (SELECT name FROM patrons WHERE holds.patron_id = patrons.id)
+  FROM holds
+  WHERE isbn IN
+    (SELECT isbn FROM books WHERE title = 'Advanced Potion-Making')
+  ORDER BY rank;
+
+  b. SELECT (SELECT title FROM books WHERE transactions.isbn = books.isbn), MAX(checked_in_date) AS checked_in
+  FROM transactions
+  WHERE checked_in_date IS NULL
+  GROUP BY isbn;
+
+  c. SELECT (SELECT title FROM books WHERE books.isbn = transactions.isbn), AVG(transactions.checked_in_date - transactions.checked_out_date) AS average
+  FROM transactions
+  WHERE transactions.checked_in_date >= CURRENT_DATE - INTERVAL '30 DAYS' AND transactions.checked_in_date IS NOT NULL
+  GROUP BY isbn;
+
+  d. SELECT (SELECT title FROM books WHERE transactions.isbn = books.isbn)
+  FROM transactions
+  GROUP BY isbn
+  HAVING MAX(transactions.checked_out_date) < CURRENT_DATE - INTERVAL '5 YEARS';
+
+  e. SELECT (SELECT name FROM patrons WHERE transactions.patron_id = patrons.id), (SELECT title FROM books WHERE transactions.isbn = books.isbn)
+  FROM transactions
+  WHERE transactions.checked_in_date IS NULL;
+
+9.
+  a. SELECT (SELECT model FROM airplanes WHERE flights.airplane_model = airplanes.model), (SELECT seats_sold FROM transactions WHERE transactions.flight_number = flights.flight_number AND seats_sold > 250)
+  FROM flights;
+
+  b. SELECT destination, origin
+  FROM flights
+  WHERE (SELECT SUM(seats_sold) FROM transactions WHERE flights.flight_number = transactions.flight_number AND date > CURRENT_DATE - INTERVAL '1 MONTH') / (SELECT seat_capacity FROM airplanes WHERE flights.airplane_model = airplanes.model) > 0.9;
+
+  c. SELECT SUM(total_revenue)
+  FROM transactions
+  WHERE transactions.flight_number IN
+	(SELECT flight_number FROM flights WHERE transactions.flight_number = flights.flight_number AND origin = 'SIN' OR destination = 'SIN');
+
+
+10. The subqueries were more readable, however the joins were more logical for me to write.
